@@ -7,11 +7,11 @@ const create = (element) => {
 }
 
 const addClass = (element, classlist) =>{
-    classlist.forEach(clas => {element.classList.add(clas)})
+    classlist.forEach(clas => {element.classList.add(clas)});
 }
 
 const remClass = (element, classlist) =>{
-    classlist.forEach(clas => {element.classList.remove(clas)})
+    classlist.forEach(clas => {element.classList.remove(clas)});
 }
 
 const find = (selector) => {
@@ -23,7 +23,11 @@ const write = (element, text) => {
 }
 
 const detect = (element, event, func) =>{
-    element.addEventListener(event, func)
+    element.addEventListener(event, func);
 }
 
-export {render, create, addClass, remClass, find, write, detect}
+const style = (element, styletext) => {
+    element.style.cssText = styletext;
+}
+
+export {render, create, addClass, remClass, find, write, detect, style}
