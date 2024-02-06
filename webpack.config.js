@@ -6,7 +6,7 @@ module.exports = {
   devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Alfa Expects',
+      title: 'webpack-test3',
       mode: 'Development',
     }),
   ],

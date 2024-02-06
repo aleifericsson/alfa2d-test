@@ -1,7 +1,9 @@
 import './style.css';
 import {render, create, addClass, remClass, find, write, detect} from "./scripts/QoL"
-import { canvas } from './components/canvas';
+import { canvas, runCanvas } from './components/canvas';
 
-render(document.body, canvas(640,640))
+const canv = canvas(640,640);
+render(document.body, canv);
+console.log("commencing");
+runCanvas(canv, 640, 640);
 
-console.log("commence")
