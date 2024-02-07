@@ -46,11 +46,11 @@ const generateTiles = () => {
 
 const initSprites2 = (ctx) =>{
     initSprites();
-    spriteList.forEach(sprite => sprite.draw(ctx));
+    spriteList.forEach(sprite => {sprite.draw(ctx); sprite.nextFrame()});
 }
 
 const updateSprites = (ctx)=>{
-    spriteList.forEach(sprite => sprite.draw(ctx));
+    spriteList.forEach(sprite => {sprite.draw(ctx); sprite.nextFrame()});
 }
 
 export {initBackground, updateBackground, initSprites2, updateSprites}

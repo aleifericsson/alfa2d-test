@@ -1,9 +1,14 @@
 import './style.css';
 import {render, create, addClass, remClass, find, write, detect} from "./scripts/QoL"
-import { canvas, runCanvas } from './components/canvas';
+import { canvas, runEverything } from './components/canvas';
+import { wrapper } from './components/wrapper';
 
-const canv = canvas(640,640);
-render(document.body, canv);
+const sz = 640;
+const rapper = wrapper();
+const backgroundCanvas = canvas(sz,sz,0);
+const spriteCanvas = canvas(sz,sz,1);
+render(rapper, backgroundCanvas);
+render(rapper, spriteCanvas);
 console.log("commencing");
-runCanvas(canv, 640, 640);
+runEverything([backgroundCanvas,spriteCanvas], sz, sz);
 

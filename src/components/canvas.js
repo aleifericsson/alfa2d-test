@@ -4,36 +4,46 @@ import {initBackground, updateBackground, initSprites2, updateSprites} from "../
 let frame = 0;
 
 
-const canvas = (width, height) => {
+const canvas = (width, height, layer) => {
     const canv = create("canvas");
-    addClass(canv, ["game-canvas"]);
-    canv.setAttribute("height", `${height}px`);
-    canv.setAttribute("width", `${height}px`)
+    addClass(canv, ["game-canvas", `layer-${layer}`]);
+    canv.setAttribute("width", `${width}`);
+    canv.setAttribute("height", `${height}`);
 
     style(canv, `
-        width: ${width}px;
-        height: ${height}px;
+        position:absolute;
     `);
     const ctx = canv.getContext("2d");
     
-    initBackground(ctx, width, height);
-    initSprites2(ctx);
+    if (layer===0)
+    {
+        initBackground(ctx, width, height);
+    }
+    if (layer ===1){
+        initSprites2(ctx);
+    }
 
     return canv;
 }
 
-const runCanvas = (canv, width, height) =>{
-    const ctx = canv.getContext("2d");
-    frame++;
-    updateBackground(ctx, width, height);
-    updateSprites(ctx);
+const runEverything = (canvasList, width, height) =>{
+    canvasList.map((canvas,index) => {
+        const ctx = canvas.getContext("2d");
+        frame++;
+        if (index===0){
+            updateBackground(ctx, width, height);
+        }
+        if (index===1){   
+            updateSprites(ctx);
+        }
+    });
     /*
     if (frame < 100000) {
-        window.requestAnimationFrame(runCanvas(canv,width,height));
+        window.requestAnimationFrame(runCanvas(canvasList,width,height));
     }
     */
 }
 
 
 
-export {canvas, runCanvas}
+export {canvas, runEverything}
