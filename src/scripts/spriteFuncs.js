@@ -1,4 +1,4 @@
-import coinsrc from "../images/Coin.png";
+import coinsrc from "../images/coin.png";
 
 function Sprite(name,imgsrc, frames, size, x, y){
     this.name = name;
@@ -12,13 +12,14 @@ function Sprite(name,imgsrc, frames, size, x, y){
         let img = new Image();
         img.src = this.imgsrc;
         const sz = this.size;
+        const fram = this.currentFrame;
+        const ex = this.x;
+        const ey = this.y;
         img.onload = function() {
         //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
         //where s = sprite, d = draw
-        ctx.drawImage(img, this.currentFrame*sz, 0, sz, sz, this.x, this.y, sz,sz);
+        ctx.drawImage(img, fram*sz, 0, sz, sz, ex, ey, sz,sz);
         }
-        console.log(ctx);
-        console.log(spriteList);
     }
     this.nextFrame = function(){
         this.currentFrame+=1;

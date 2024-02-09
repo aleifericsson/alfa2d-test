@@ -30,4 +30,10 @@ const style = (element, styletext) => {
     element.style.cssText = styletext;
 }
 
-export {render, create, addClass, remClass, find, write, detect, style}
+const attribs = (element, attribList, values) => {
+    attribList.map((attrib,index) => {
+        element.setAttribute(attrib, values[index]);
+    })
+}
+
+export {render, create, addClass, remClass, find, write, detect, style, attribs}

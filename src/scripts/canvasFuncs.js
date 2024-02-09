@@ -53,4 +53,8 @@ const updateSprites = (ctx)=>{
     spriteList.forEach(sprite => {sprite.draw(ctx); sprite.nextFrame()});
 }
 
-export {initBackground, updateBackground, initSprites2, updateSprites}
+const clear = (ctx, width, height) =>{
+    ctx.clearRect(0, 0, width, height);
+}
+
+export {initBackground, updateBackground, initSprites2, updateSprites, clear}
