@@ -4,8 +4,6 @@ import floor_tiles from "../images/floor_tiles.png";
 let tiles;
 
 const updateBackground = (ctx, width, height) => {
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, width, height);
     renderTiles(tiles,ctx);
 }
 

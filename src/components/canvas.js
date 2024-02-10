@@ -1,7 +1,11 @@
 import {render, create, addClass, remClass, find, write, detect, style, attribs} from "../scripts/QoL"
 import {initBackground, updateBackground, initSprites2, updateSprites, clear} from "../scripts/canvasFuncs";
 
-let frame = 0;
+let stop = false;
+let frames = 0;
+const fps = 30
+const msPerFrame = 1000 / fps
+let msPrev = window.performance.now()
 
 
 const canvas = (width, height, layer) => {
@@ -25,23 +29,38 @@ const canvas = (width, height, layer) => {
     return canv;
 }
 
-const runEverything = (canvasList, width, height) =>{
-    canvasList.map((canvas,index) => {
-        const ctx = canvas.getContext("2d");
-        clear(ctx, width, height)
-        frame++;
-        if (index===0){
-            updateBackground(ctx, width, height);
-        }
-        if (index===1){   
-            updateSprites(ctx);
-        }
-    });
-    /*
-    if (frame < 100000) {
-        window.requestAnimationFrame(runCanvas(canvasList,width,height));
+function runEverything(canvasList, width, height){
+
+    const animateEverything = () => {
+
+        window.requestAnimationFrame(animateEverything);
+
+        const msNow = window.performance.now();
+        const msPassed = msNow - msPrev;
+
+        if (msPassed < msPerFrame) return
+
+        const excessTime = msPassed % msPerFrame
+        msPrev = msNow - excessTime
+
+        // Put your drawing code here
+        canvasList.map((canvas,index) => {
+            const ctx = canvas.getContext("2d");
+            //clear(ctx, width, height)
+            frames++;
+            if (index===0){
+                //updateBackground(ctx, width, height);
+                //implement someway so that it wont update unless there is a change
+            }
+            if (index===1){   
+                updateSprites(ctx);
+            }
+        });
+
+    
     }
-    */
+
+    animateEverything();
 }
 
 
