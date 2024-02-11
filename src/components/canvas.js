@@ -1,4 +1,5 @@
 import {render, create, addClass, remClass, find, write, detect, style, attribs} from "../scripts/QoL"
+import { initMouse } from "../scripts/canvMouseFuncs";
 import {initBackground, updateBackground, initSprites2, updateSprites, clear} from "../scripts/canvasFuncs";
 
 let stop = false;
@@ -17,6 +18,8 @@ const canvas = (width, height, layer) => {
         position:absolute;
     `);
     const ctx = canv.getContext("2d");
+
+    initMouse(canv);
     
     if (layer===0)
     {
@@ -49,7 +52,7 @@ function runEverything(canvasList, width, height){
             //clear(ctx, width, height)
             frames++;
             if (index===0){
-                //updateBackground(ctx, width, height);
+                updateBackground(ctx, width, height);
                 //implement someway so that it wont update unless there is a change
             }
             if (index===1){   

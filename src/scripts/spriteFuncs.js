@@ -8,7 +8,7 @@ function Sprite(name,imgsrc, frames, twos, size, x, y){
     this.currentFrame = 0;
     this.x = x;
     this.y = y;
-    this.twos = true;
+    this.twos = twos;
     this.draw = function(ctx){
         let img = new Image();
         img.src = this.imgsrc;

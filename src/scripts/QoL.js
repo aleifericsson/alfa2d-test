@@ -10,6 +10,10 @@ const addClass = (element, classlist) =>{
     classlist.forEach(clas => {element.classList.add(clas)});
 }
 
+const hasClass = (element, clas) => {
+    return element.classList.contains(clas);
+}
+
 const remClass = (element, classlist) =>{
     classlist.forEach(clas => {element.classList.remove(clas)});
 }
@@ -36,4 +40,4 @@ const attribs = (element, attribList, values) => {
     })
 }
 
-export {render, create, addClass, remClass, find, write, detect, style, attribs}
+export {render, create, addClass, hasClass, remClass, find, write, detect, style, attribs}

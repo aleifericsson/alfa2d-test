@@ -37,6 +37,15 @@ const drawTile=(tile,x,y, ctx) =>{
     }  
 }
 
+const modifyTile = (x,y, tile) => {
+    tiles[x][y] = tile;
+    console.log(tiles);
+}
+
+const getTiles = () => {
+    return(tiles);
+}
+
 const generateTiles = () => {
     const arr = new Array(10).fill(0).map(()=>new Array(10).fill(0));
     return arr;
@@ -55,4 +64,4 @@ const clear = (ctx, width, height) =>{
     ctx.clearRect(0, 0, width, height);
 }
 
-export {initBackground, updateBackground, initSprites2, updateSprites, clear}
+export {initBackground, updateBackground, initSprites2, updateSprites, clear, modifyTile, getTiles}
