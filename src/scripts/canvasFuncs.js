@@ -9,11 +9,11 @@ const updateBackground = (ctx, width, height) => {
 
 const initBackground = (ctx, width, height) =>{
     tiles = generateTiles();
-    tiles[2][1] = 1;
-    tiles[9][9] = 3;
-    tiles[9][8] = 3;
-    tiles[8][8] = 2;
-    tiles[8][9] = 2;
+    tiles[2][1] = 11;
+    tiles[9][9] = 18;
+    tiles[9][8] = 18;
+    tiles[8][8] = 19;
+    tiles[8][9] = 19;
     console.log(tiles);
     updateBackground(ctx, width, height);
 }
@@ -32,8 +32,9 @@ const drawTile=(tile,x,y, ctx) =>{
     tileset.src = floor_tiles;
     tileset.onload = function() {
         //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-    //where s = sprite, d = draw
-    ctx.drawImage(tileset, tile*size, 0, size, size, x*size, y*size, size,size);
+        //where s = sprite, d = draw
+        //ctx.rotate((90 * Math.PI) / 180);
+        ctx.drawImage(tileset, tile*size, 0, size, size, x*size, y*size, size,size);
     }  
 }
 
@@ -47,7 +48,7 @@ const getTiles = () => {
 }
 
 const generateTiles = () => {
-    const arr = new Array(10).fill(0).map(()=>new Array(10).fill(0));
+    const arr = new Array(10).fill(0).map(()=>new Array(10).fill(10));
     return arr;
 }
 

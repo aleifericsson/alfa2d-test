@@ -10,4 +10,18 @@ const wrapper = () =>{
     return rapper;
 }
 
-export {wrapper};
+const miniWrapper = () =>{
+    const rapper = create("div");
+    addClass(rapper, ["mini-wrapper"]);
+    style(rapper,`
+        position:relative;
+        background-color: #FFFFFF;
+        top: 650px;
+        height: 80px;
+        width: 640px;
+    `)
+    render(document.body, rapper);
+    return rapper;
+}
+
+export {wrapper, miniWrapper};

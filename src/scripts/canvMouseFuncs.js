@@ -26,7 +26,7 @@ const backgroundChange = (ctx, mouse) => {
     let tiles = getTiles();
     let tile = tiles[tilex][tiley];
     tile++;
-    if (tile==4){
+    if (tile==20){
         tile = 0;
     }
     modifyTile(tilex,tiley,tile);

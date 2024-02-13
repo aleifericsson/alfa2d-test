@@ -4,8 +4,8 @@ const debugTools = () =>{
     const debugWrap = create("div");
     addClass(debugWrap, ["debug-wrapper"]);
     style(debugWrap,`
-        position:absolute;
-        top:650px;
+        position:relative;
+        top:660px;
     `)
 
     const slider = create("input");
