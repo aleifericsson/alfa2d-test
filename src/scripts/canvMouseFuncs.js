@@ -36,4 +36,4 @@ const dragSprite = () => {
 
 }
 
-export {initMouse};
+export {initMouse, getMousePos, backgroundChange};

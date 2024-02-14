@@ -1,7 +1,7 @@
 import {render, create, addClass, remClass, find, write, detect, style, attribs} from "../scripts/QoL"
-import { initMouse } from "../scripts/canvMouseFuncs";
-import {initBackground, updateBackground, initSprites2, updateSprites, clear} from "../scripts/canvasFuncs";
 import Can from "../images/can.png"
+import Coin from "../images/coin.png"
+import { backgroundChange } from "../scripts/canvMouseFuncs";
 
 let stop = false;
 let frames = 0;
@@ -16,31 +16,23 @@ function miniCanvas(name, img){
     this.size = 64;
     this.img = img;
     this.currentFrame = 0;
-    this.orix;
-    this.oriy;
-    this.elex;
-    this.eley;
-    this.dragging = false;
     this.ele;
     this.ctx;
+    this.addedleft;
 
-    this.init = () =>{
+    this.init = (index) =>{
+        this.addedleft = miniList.length*64;
+
         const size = this.size;
         name = this.name;
         const canv = create("canvas");
         addClass(canv, ["mini-canvas", `${name}`]);
         attribs(canv, ["width", "height"], [`${size}px`,`${size}px`]);
 
-        const rect = document.body.getBoundingClientRect();
-        this.elex = rect.left;
-        this.eley = rect.top;
-        this.orix = rect.left;
-        this.oriy = rect.top;
-        console.log(this.elex, this.eley);
-
 
         style(canv, `
             position:absolute;
+            margin: 5 auto;
         `);
         const ctx = canv.getContext("2d");
         const img = this.img;
@@ -59,27 +51,65 @@ function miniCanvas(name, img){
 
     this.initMouse = (canv) => {
         const ctx = this.ctx;
-        canv.addEventListener("drag", (event) => {
-            const mousePos = getMousePos(canv, evt);
-            drag=true;
+        let mousePos;
+        const lef = this.addedleft;
+        const updateDrag = (evt) =>{
+
+            const rect = document.body.getBoundingClientRect();
+
+            mousePos = {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+                    
+            canv.style.top = mousePos.y-650-32 + "px";
+            canv.style.left = mousePos.x-32 + "px";
+
+            doSomething(this.name, evt)
+        }
+        canv.addEventListener("mousedown", (evt) => {
+
+            document.body.addEventListener("mousemove", updateDrag)
         });
-        canv.addEventListener("drop", (event) => {
-            drag=false;
+        document.body.addEventListener("mouseup", (evt) => {
+            document.body.removeEventListener("mousemove", updateDrag);
+            canv.style.top = 0 + "px";
+            canv.style.left = 0 +lef+ "px";
         });
-    }
-   
+    }       
 }
+
+const doSomething = (name, evt) => {
+    if (name === "can"){
+        const canv = find(".layer-1");
+        const ctx = canv.getContext("2d");
+
+        const rect = canv.getBoundingClientRect();
+
+        const mousePos = {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+
+        //fix out of bounds and only updating when it moves
+        backgroundChange(ctx, mousePos)
+    }
+}
+
 
 const initMini = (name, imgsrc) => {
     const img = new Image()
     img.src = imgsrc;
     const mini = new miniCanvas(name, img)
+    const miniele = mini.init(miniList.length);
+    miniele.style.left = `${miniList.length*64}px`;
     miniList.push(mini);
-    return mini.init();
+    return miniele;
 }
 
 const initMinis = (miniWrapper) => {
     render(miniWrapper, initMini("can", Can))
+    render(miniWrapper, initMini("coin", Coin))
 }
 
 /*
