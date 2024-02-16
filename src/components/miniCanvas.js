@@ -11,21 +11,20 @@ let msPrev = window.performance.now()
 
 let miniList = [];
 
-function miniCanvas(name, img){
+function miniCanvas(name, img, imgsrc){
     this.name = name;
     this.size = 64;
     this.img = img;
+    this.imgsrc = imgsrc;
     this.currentFrame = 0;
     this.canvele;
     this.imgele
-    this.ctx;
-    this.addedleft;
 
     this.init = (index) =>{
         this.addedleft = miniList.length*64;
 
         const size = this.size;
-        name = this.name;
+        const name = this.name;
         const canv = create("canvas");
         addClass(canv, ["mini-canvas", `${name}`]);
         attribs(canv, ["width", "height"], [`${size}px`,`${size}px`]);
@@ -34,6 +33,7 @@ function miniCanvas(name, img){
         style(canv, `
             position:absolute;
             margin: 5 auto;
+            pointer-events:none;
         `);
         const ctx = canv.getContext("2d");
         const img = this.img;
@@ -45,67 +45,80 @@ function miniCanvas(name, img){
         this.canvele = canv;
         this.ctx = ctx;
 
-        
         const imgele = create("div");
-        imgele.id = `${this.name}-icon`
-        this.imgele =imgele;
+        style(imgele, `
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            background: url(${this.imgsrc}) -64px 0;
+        `)
+        this.imgele = imgele;
 
-        this.initMouse(canv);
+        this.initMouse(canv, imgele);
 
-        return canv;
+        return imgele;
     }
 
-    this.initMouse = (canv) => {
-        const ctx = this.ctx;
+    this.initMouse = (canv, imgele) => {
+        const ctx = canv.getContext("2d");
         let mousePos;
-        const lef = this.addedleft;
         const backCanv = find(".layer-1");
-        const backctx = backCanv.getContext("2d");
-        const imgele = this.imgele;
-        const img = this.img;
+        let interval_list = [];
+        let mousePos2;
+        let size = this.size;
 
         const hoverFunc = (evt) => {
             if (this.name === "can")
-            {
-                const rect = backCanv.getBoundingClientRect();
-
-                const mousePos = {
-                    x: evt.clientX - rect.left,
-                    y: evt.clientY - rect.top
-                };
-                console.log(mousePos);
-                backgroundChange(ctx, mousePos)
+            {   
+                let curFra = 0;
+                if (interval_list.length === 0){
+                    interval_list.push(setInterval(() => {
+                        backgroundChange(ctx, mousePos2);
+                        const img = this.img;
+                        ctx.clearRect(0,0,size,size);
+                        ctx.drawImage(img, curFra*size, 0, size, size, 0, 0, size,size);
+                        console.log("bru")
+                        curFra += 1;
+                        if(curFra === 14){
+                            curFra = 10
+                        }
+                    }, 250))
+                }
             }
         }
         const updateDrag = (evt) =>{
 
             const rect = document.body.getBoundingClientRect();
-
+            const rect2 = backCanv.getBoundingClientRect();
+            mousePos2 = {
+                x: evt.clientX - rect2.left,
+                y: evt.clientY - rect2.top
+            };
             mousePos = {
                 x: evt.clientX - rect.left,
                 y: evt.clientY - rect.top
             };
                     
-            imgele.style.top = mousePos.y + "px";
-            imgele.style.left = mousePos.x + "px";
+            canv.style.top = mousePos.y -32 +"px";
+            canv.style.left = mousePos.x -32 + "px";
 
         }
 
 
-        canv.addEventListener("mousedown", (evt) => {
-            render(document.body,imgele);
+        imgele.addEventListener("mousedown", (evt) => {
+            render(document.body,canv);
             document.body.addEventListener("mousemove", updateDrag)
             backCanv.addEventListener("mouseenter", hoverFunc)
             
         });
         document.body.addEventListener("mouseup", (evt) => {
-            const hasChild = find(`#${this.name}-icon`) != null;
-            if (hasChild) remove(document.body, imgele);
+            clearInterval(interval_list[0]);
+            interval_list = [];
+            const hasChild = find(`.mini-canvas.${this.name}`) != null;
+            if (hasChild) remove(document.body, canv);
 
             document.body.removeEventListener("mousemove", updateDrag);
             backCanv.removeEventListener("mouseenter", hoverFunc)
-            canv.style.top = 0 + "px";
-            canv.style.left = 0 +lef+ "px";
         });
     }       
 }
@@ -115,7 +128,7 @@ function miniCanvas(name, img){
 const initMini = (name, imgsrc) => {
     const img = new Image()
     img.src = imgsrc;
-    const mini = new miniCanvas(name, img)
+    const mini = new miniCanvas(name, img, imgsrc)
     const miniele = mini.init(miniList.length);
     miniele.style.left = `${miniList.length*64}px`;
     miniList.push(mini);

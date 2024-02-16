@@ -40,7 +40,6 @@ const drawTile=(tile,x,y, ctx) =>{
 
 const modifyTile = (x,y, tile) => {
     tiles[x][y] = tile;
-    console.log(tiles);
 }
 
 const getTiles = () => {

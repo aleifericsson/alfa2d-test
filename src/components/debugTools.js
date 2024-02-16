@@ -1,4 +1,5 @@
 import {render, create, addClass, remClass, find, write, detect,style,attribs} from "../scripts/QoL"
+import buttons from "../images/Buttons.png"
 
 const debugTools = () =>{
     const debugWrap = create("div");
