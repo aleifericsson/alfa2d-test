@@ -1,4 +1,4 @@
-import {render, create, addClass, remClass, find, write, detect, style, attribs} from "../scripts/QoL"
+import {render, remove, create, addClass, remClass, find, write, detect, style, attribs} from "../scripts/QoL"
 import Can from "../images/can.png"
 import Coin from "../images/coin.png"
 import { backgroundChange } from "../scripts/canvMouseFuncs";
@@ -16,7 +16,8 @@ function miniCanvas(name, img){
     this.size = 64;
     this.img = img;
     this.currentFrame = 0;
-    this.ele;
+    this.canvele;
+    this.imgele
     this.ctx;
     this.addedleft;
 
@@ -41,10 +42,15 @@ function miniCanvas(name, img){
             ctx.drawImage(img, 0, 0, size, size, 0, 0, size,size);
         }
 
-        this.initMouse(canv);
-
-        this.ele = canv;
+        this.canvele = canv;
         this.ctx = ctx;
+
+        
+        const imgele = create("div");
+        imgele.id = `${this.name}-icon`
+        this.imgele =imgele;
+
+        this.initMouse(canv);
 
         return canv;
     }
@@ -53,6 +59,24 @@ function miniCanvas(name, img){
         const ctx = this.ctx;
         let mousePos;
         const lef = this.addedleft;
+        const backCanv = find(".layer-1");
+        const backctx = backCanv.getContext("2d");
+        const imgele = this.imgele;
+        const img = this.img;
+
+        const hoverFunc = (evt) => {
+            if (this.name === "can")
+            {
+                const rect = backCanv.getBoundingClientRect();
+
+                const mousePos = {
+                    x: evt.clientX - rect.left,
+                    y: evt.clientY - rect.top
+                };
+                console.log(mousePos);
+                backgroundChange(ctx, mousePos)
+            }
+        }
         const updateDrag = (evt) =>{
 
             const rect = document.body.getBoundingClientRect();
@@ -62,39 +86,30 @@ function miniCanvas(name, img){
                 y: evt.clientY - rect.top
             };
                     
-            canv.style.top = mousePos.y-650-32 + "px";
-            canv.style.left = mousePos.x-32 + "px";
+            imgele.style.top = mousePos.y + "px";
+            imgele.style.left = mousePos.x + "px";
 
-            doSomething(this.name, evt)
         }
-        canv.addEventListener("mousedown", (evt) => {
 
+
+        canv.addEventListener("mousedown", (evt) => {
+            render(document.body,imgele);
             document.body.addEventListener("mousemove", updateDrag)
+            backCanv.addEventListener("mouseenter", hoverFunc)
+            
         });
         document.body.addEventListener("mouseup", (evt) => {
+            const hasChild = find(`#${this.name}-icon`) != null;
+            if (hasChild) remove(document.body, imgele);
+
             document.body.removeEventListener("mousemove", updateDrag);
+            backCanv.removeEventListener("mouseenter", hoverFunc)
             canv.style.top = 0 + "px";
             canv.style.left = 0 +lef+ "px";
         });
     }       
 }
 
-const doSomething = (name, evt) => {
-    if (name === "can"){
-        const canv = find(".layer-1");
-        const ctx = canv.getContext("2d");
-
-        const rect = canv.getBoundingClientRect();
-
-        const mousePos = {
-            x: evt.clientX - rect.left,
-            y: evt.clientY - rect.top
-        };
-
-        //fix out of bounds and only updating when it moves
-        backgroundChange(ctx, mousePos)
-    }
-}
 
 
 const initMini = (name, imgsrc) => {

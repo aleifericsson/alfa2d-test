@@ -2,6 +2,10 @@ const render = (parent, child) => {
     parent.appendChild(child);
 }
 
+const remove = (parent, child) =>{
+    parent.removeChild(child);
+}
+
 const create = (element) => {
     return document.createElement(element);
 }
@@ -40,4 +44,4 @@ const attribs = (element, attribList, values) => {
     })
 }
 
-export {render, create, addClass, hasClass, remClass, find, write, detect, style, attribs}
+export {render, remove, create, addClass, hasClass, remClass, find, write, detect, style, attribs}
