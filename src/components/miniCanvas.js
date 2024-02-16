@@ -140,41 +140,4 @@ const initMinis = (miniWrapper) => {
     render(miniWrapper, initMini("coin", Coin))
 }
 
-/*
-function runEverything(canvasList, width, height){
-
-    const animateEverything = () => {
-
-        window.requestAnimationFrame(animateEverything);
-
-        const msNow = window.performance.now();
-        const msPassed = msNow - msPrev;
-
-        if (msPassed < msPerFrame) return
-
-        const excessTime = msPassed % msPerFrame
-        msPrev = msNow - excessTime
-
-        // Put your drawing code here
-        canvasList.map((canvas,index) => {
-            const ctx = canvas.getContext("2d");
-            //clear(ctx, width, height)
-            frames++;
-            if (index===0){
-                updateBackground(ctx, width, height);
-                //implement someway so that it wont update unless there is a change
-            }
-            if (index===1){   
-                updateSprites(ctx);
-            }
-        });
-
-    
-    }
-
-    animateEverything();
-}
-
-*/
-
 export {initMinis}

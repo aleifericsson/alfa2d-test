@@ -34,6 +34,10 @@ const detect = (element, event, func) =>{
     element.addEventListener(event, func);
 }
 
+const undetect = (element, event, func) =>{
+    element.removeEventListener(event, func);
+}
+
 const style = (element, styletext) => {
     element.style.cssText = styletext;
 }
@@ -44,4 +48,4 @@ const attribs = (element, attribList, values) => {
     })
 }
 
-export {render, remove, create, addClass, hasClass, remClass, find, write, detect, style, attribs}
+export {render, remove, create, addClass, hasClass, remClass, find, write, detect, undetect, style, attribs}

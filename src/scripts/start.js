@@ -4,16 +4,23 @@ import { canvas, runEverything } from '../components/canvas';
 import { wrapper, miniWrapper } from '../components/wrapper';
 import { debugTools } from '../components/debugTools';
 import { initMinis } from '../components/miniCanvas';
+import { buttonOverlay } from '../components/buttonOverlay';
+
+const width = 640;
+const height = 640;
 
 const initCanvases = () => {
-    const sz = 640;
     const rapper = wrapper();
-    const backgroundCanvas = canvas(sz,sz,0);
-    const spriteCanvas = canvas(sz,sz,1);
+    const backgroundCanvas = canvas(width,height,0);
+    const spriteCanvas = canvas(width,height,1);
     render(rapper, backgroundCanvas);
     render(rapper, spriteCanvas);
     console.log("commencing");
-    runEverything([backgroundCanvas,spriteCanvas], sz, sz);
+    runEverything([backgroundCanvas,spriteCanvas], width, height);
+
+
+    const butOv = buttonOverlay(width, height)
+    render(rapper, butOv);
 }
 
 const initMiniCanvases = () => {

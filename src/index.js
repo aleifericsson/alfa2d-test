@@ -1,4 +1,4 @@
-import {initCanvases, initDebug, initMiniCanvases} from "./scripts/start";
+import {initCanvases, initDebug, initMiniCanvases, initButtonOverlay} from "./scripts/start";
 
 initCanvases();
 initMiniCanvases();
