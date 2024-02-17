@@ -3,12 +3,6 @@ import Can from "../images/can.png"
 import Coin from "../images/coin.png"
 import { backgroundChange } from "../scripts/canvMouseFuncs";
 
-let stop = false;
-let frames = 0;
-const fps = 30
-const msPerFrame = 1000 / fps
-let msPrev = window.performance.now()
-
 let miniList = [];
 
 function miniCanvas(name, img, imgsrc){
@@ -77,7 +71,6 @@ function miniCanvas(name, img, imgsrc){
                         const img = this.img;
                         ctx.clearRect(0,0,size,size);
                         ctx.drawImage(img, curFra*size, 0, size, size, 0, 0, size,size);
-                        console.log("bru")
                         curFra += 1;
                         if(curFra === 14){
                             curFra = 10
@@ -115,7 +108,9 @@ function miniCanvas(name, img, imgsrc){
             clearInterval(interval_list[0]);
             interval_list = [];
             const hasChild = find(`.mini-canvas.${this.name}`) != null;
-            if (hasChild) remove(document.body, canv);
+            if (hasChild) {
+                remove(document.body, canv);
+            }
 
             document.body.removeEventListener("mousemove", updateDrag);
             backCanv.removeEventListener("mouseenter", hoverFunc)
