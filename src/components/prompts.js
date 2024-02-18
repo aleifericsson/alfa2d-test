@@ -1,7 +1,6 @@
 import {render, remove, create, addClass, remClass, hasClass, find, write, detect, undetect, style} from "../scripts/QoL"
-import buttons from "../images/Buttons.png"
+import close from "../images/close.png"
 
-const butSize = 32;
 let butOv;
 
 const togglePrompt = (e) => {
@@ -21,38 +20,77 @@ const createPrompt = (mytext) => {
     butOv = find(".button-overlay");
     const prompt = create("div");
         addClass(prompt, ["prompt", "start-state"]);
+        prompt.id = "prompt1"
         style(prompt, `
             color:white;
             background-color: slategray;
             border: 5px solid darkslategray;
             border-radius: 5px;
             position:absolute;
-            transition: 0.3s;
+            transition: 0.1s;
             width: 200px;
             height: 100px;
             left: 200px;
             top: 250px;
         `);
-
-        const closePrompt = create("div");
-        closePrompt.id = "closeprompt1";
-        style(closePrompt, `
-            position: absolute;
-            left: 160px;
-            top: 10px;
-            width: ${butSize}px;
-            height: ${butSize}px;
-            background: url(${buttons}) -${4*butSize}px 0;
-        `);
-        render(prompt, closePrompt);
-        detect(closePrompt, "click", togglePrompt);
+        
+        const drag = dragBar();
+        render(prompt, drag);
 
         render(prompt, createText(mytext))
-
-        
         render(document.body, prompt);
 
         setTimeout(()=> prompt.classList.remove("start-state"), 100);
+}
+
+const dragBar = () => {
+    const bar = create("div");
+    addClass(bar, ["bar"]);
+    style(bar, `
+        display:flex;
+        justify-content: flex-end;
+        padding: 5px;
+        background-color: darkslategray;
+        height: 20px;
+    `)
+
+    const closePrompt = create("div");
+    addClass(closePrompt, ["button", "closeprompt"]);
+    closePrompt.id = "closeprompt1";
+    style(closePrompt, `
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: url(${close});
+    `);
+
+    render(bar, closePrompt)
+    detect(bar, "mousedown", mouseDown)
+    detect(bar, "mouseup", mouseUp)
+
+    detect(closePrompt, "click", togglePrompt);
+
+    return bar;
+}
+
+const mouseDown = () =>{
+    detect(document.body, "mousemove", mouseMove)
+}
+
+const mouseMove = (evt) => {
+    const prompt = find("#prompt1")
+    const rect = document.body.getBoundingClientRect();
+    const mousePos = {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+                    
+    prompt.style.top = mousePos.y -10 +"px";
+    prompt.style.left = mousePos.x -100 + "px";
+}
+
+const mouseUp = () =>{
+    undetect(document.body,"mousemove", mouseMove);
 }
 
 const createText = (mytext) =>{
@@ -61,9 +99,10 @@ const createText = (mytext) =>{
             color:white;
             position:relative;
             text-align:center;
-            top:50%;
+            margin:15px 5px;
         `);
-        write(text, mytext)
+    write(text, mytext)
+
     return text;
 }
 

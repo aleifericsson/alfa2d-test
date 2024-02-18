@@ -40,11 +40,11 @@ function miniCanvas(name, img, imgsrc){
         this.ctx = ctx;
 
         const imgele = create("div");
+        addClass(imgele, ["canvas-icon"])
         style(imgele, `
-            position: absolute;
             width: 64px;
             height: 64px;
-            background: url(${this.imgsrc}) -64px 0;
+            background: url(${this.imgsrc}) -64px 0, rgba(255,255,255,0.5);
         `)
         this.imgele = imgele;
 
@@ -105,15 +105,14 @@ function miniCanvas(name, img, imgsrc){
             
         });
         document.body.addEventListener("mouseup", (evt) => {
+            document.body.removeEventListener("mousemove", updateDrag);
+            backCanv.removeEventListener("mouseenter", hoverFunc)
             clearInterval(interval_list[0]);
             interval_list = [];
             const hasChild = find(`.mini-canvas.${this.name}`) != null;
             if (hasChild) {
                 remove(document.body, canv);
             }
-
-            document.body.removeEventListener("mousemove", updateDrag);
-            backCanv.removeEventListener("mouseenter", hoverFunc)
         });
     }       
 }
@@ -125,7 +124,6 @@ const initMini = (name, imgsrc) => {
     img.src = imgsrc;
     const mini = new miniCanvas(name, img, imgsrc)
     const miniele = mini.init(miniList.length);
-    miniele.style.left = `${miniList.length*64}px`;
     miniList.push(mini);
     return miniele;
 }

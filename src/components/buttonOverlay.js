@@ -26,6 +26,7 @@ const generateButtons = (butOv) => {
 
 const Button = (name, spritenum, func, x, y) =>{
     const button = create("div");
+    addClass(button, ["button", name]);
     button.id = name;
         style(button, `
             position: absolute;

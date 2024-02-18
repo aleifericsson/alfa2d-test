@@ -17,8 +17,11 @@ const miniWrapper = () =>{
         position:relative;
         background-color: #FFFFFF;
         top: 650px;
-        height: 80px;
         width: 640px;
+        display:flex;
+        justify-content: flex-start; 
+        height:64px;
+        align-items:center;
     `)
     render(document.body, rapper);
     return rapper;
