@@ -45,3 +45,11 @@ body{
 	-ms-filter: brightness(60%);
 	filter: brightness(60%);
 }
+
+.notransition {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    -ms-transition: none !important;
+    transition: none !important;
+}

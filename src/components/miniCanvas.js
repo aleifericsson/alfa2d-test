@@ -60,26 +60,27 @@ function miniCanvas(name, img, imgsrc){
         let interval_list = [];
         let mousePos2;
         let size = this.size;
+        let curFra = 0;
 
         const hoverFunc = (evt) => {
             if (this.name === "can")
             {   
-                let curFra = 0;
                 if (interval_list.length === 0){
                     interval_list.push(setInterval(() => {
                         backgroundChange(ctx, mousePos2);
                         const img = this.img;
-                        ctx.clearRect(0,0,size,size);
-                        ctx.drawImage(img, curFra*size, 0, size, size, 0, 0, size,size);
                         curFra += 1;
                         if(curFra === 14){
                             curFra = 10
                         }
+                        ctx.clearRect(0,0,size,size);
+                        ctx.drawImage(img, curFra*size, 0, size, size, 0, 0, size,size);
                     }, 250))
                 }
             }
         }
         const updateDrag = (evt) =>{
+            evt.preventDefault();
 
             const rect = document.body.getBoundingClientRect();
             const rect2 = backCanv.getBoundingClientRect();
@@ -99,9 +100,15 @@ function miniCanvas(name, img, imgsrc){
 
 
         imgele.addEventListener("mousedown", (evt) => {
+            evt.preventDefault();        
+            let curFra = 0; 
+            canv.style.top ="0px";
+            canv.style.left = "0px";
             render(document.body,canv);
             document.body.addEventListener("mousemove", updateDrag)
             backCanv.addEventListener("mouseenter", hoverFunc)
+            ctx.clearRect(0,0,size,size);
+            ctx.drawImage(img, curFra*size, 0, size, size, 0, 0, size,size);
             
         });
         document.body.addEventListener("mouseup", (evt) => {
@@ -113,6 +120,7 @@ function miniCanvas(name, img, imgsrc){
             if (hasChild) {
                 remove(document.body, canv);
             }
+            ctx.clearRect(0,0,size,size);
         });
     }       
 }
