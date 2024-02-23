@@ -1,4 +1,5 @@
 import coinsrc from "../images/coin.png";
+import carsrc from "../images/Car_updated.png"
 
 function Sprite(name,imgsrc, frames, twos, size, x, y){
     this.name = name;
@@ -44,8 +45,10 @@ function Sprite(name,imgsrc, frames, twos, size, x, y){
 }
 
 const initSprites = () =>{
-   const coin = new Sprite("coin_1", coinsrc, 12,true, 64, 50,50);
+    const coin = new Sprite("coin_1", coinsrc, 12,true, 64, 50,50);
     spriteList.push(coin);
+    //const car = new Sprite ("car", carsrc, 3, true, 64, 750, 200)
+    //spriteList.push(car);
 }
 
 const spriteList = [];

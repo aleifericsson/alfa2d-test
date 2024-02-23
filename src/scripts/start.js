@@ -5,6 +5,7 @@ import { wrapper, miniWrapper } from '../components/wrapper';
 import { debugTools } from '../components/debugTools';
 import { initMinis } from '../components/miniCanvas';
 import { buttonOverlay } from '../components/buttonOverlay';
+import { initSC } from './spritecanvas';
 
 const width = 640;
 const height = 640;
@@ -15,6 +16,7 @@ const initCanvases = () => {
     const spriteCanvas = canvas(width,height,1);
     render(rapper, backgroundCanvas);
     render(rapper, spriteCanvas);
+    initSC(rapper);
     console.log("commencing");
     runEverything([backgroundCanvas,spriteCanvas], width, height);
 
