@@ -1,13 +1,12 @@
 import {render, create, addClass, remClass, find, write, detect, style, attribs} from "../scripts/QoL"
 import { initMouse } from "../scripts/canvMouseFuncs";
-import {initBackground, updateBackground, initSprites2, updateSprites, clear} from "../scripts/canvasFuncs";
+import {initBackground, updateBackground, clear} from "../scripts/canvasFuncs";
 
 let stop = false;
 let frames = 0;
 const fps = 30
 const msPerFrame = 1000 / fps
 let msPrev = window.performance.now()
-
 
 const canvas = (width, height, layer) => {
     const canv = create("canvas");
@@ -25,15 +24,11 @@ const canvas = (width, height, layer) => {
     {
         initBackground(ctx, width, height);
     }
-    if (layer ===2){
-        initSprites2(ctx);
-    }
 
     return canv;
 }
 
 function runEverything(canvasList, width, height){
-
     const animateEverything = () => {
 
         window.requestAnimationFrame(animateEverything);
@@ -54,9 +49,6 @@ function runEverything(canvasList, width, height){
             if (index===0){
                 updateBackground(ctx, width, height);
                 //implement someway so that it wont update unless there is a change
-            }
-            if (index===2){   
-                updateSprites(ctx);
             }
         });
 

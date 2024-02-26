@@ -1,7 +1,3 @@
-body{
-    background-color: #242424;
-}
-
 .start-state{
     transform: translate(0, -2000px);
 }

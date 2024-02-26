@@ -1,7 +1,7 @@
-import { spriteList, initSprites } from "./spriteFuncs";
 import floor_tiles from "../images/floor_tiles.png";
 
 let tiles;
+const collision_tiles = [11,14,15,16,19]
 
 const updateBackground = (ctx, width, height) => {
     renderTiles(tiles,ctx);
@@ -51,17 +51,14 @@ const generateTiles = () => {
     return arr;
 }
 
-const initSprites2 = (ctx) =>{
-    initSprites();
-    spriteList.forEach(sprite => {sprite.draw(ctx); sprite.nextFrame()});
-}
-
-const updateSprites = (ctx)=>{
-    spriteList.forEach(sprite => {sprite.draw(ctx); sprite.nextFrame()});
-}
-
 const clear = (ctx, width, height) =>{
     ctx.clearRect(0, 0, width, height);
 }
 
-export {initBackground, updateBackground, initSprites2, updateSprites, clear, modifyTile, getTiles}
+const detectTile = (x, y) => {
+    const i = Math.floor(x/64)
+    const j = Math.floor(y/64)
+    return tiles[i][j]
+}
+
+export {initBackground, updateBackground, clear, modifyTile, getTiles, collision_tiles, detectTile}

@@ -1,7 +1,8 @@
-import {render, remove, create, addClass, hasClass, remClass, find, write, detect, undetect, style, attribs} from "./QoL"
+import {render, remove, create, addClass, hasClass, remClass, find, write, detect, undetect, style, attribs} from "../scripts/QoL"
 import carsrc from "../images/Car_updated.png"
-import { getTiles } from "./canvasFuncs"
+import { detectTile, getTiles } from "../scripts/canvasFuncs"
 import hlsrc from "../images/decor.png"
+import { collision_tiles } from "../scripts/canvasFuncs"
 
 let sc_list = []
 
@@ -60,7 +61,6 @@ const spriteCanvas = (wrapper, name, size, imgsrc, x, y, speed, show, frames) =>
 
 const moveTowards = (index, x, y) => {
     const obj = sc_list[index]
-    const ele = obj.ele;
     const dx = x-obj.x;
     const dy = y-obj.y;
     const mag = Math.sqrt(dx*dx + dy*dy);
@@ -68,32 +68,33 @@ const moveTowards = (index, x, y) => {
     const uy = (dy/mag)*obj.speed;
     const nx = obj.x+ux;
     const ny = obj.y+uy;
-    sc_list[index].x = nx;
-    sc_list[index].y = ny;
     const size = sc_list[index].size
-    if (mag>obj.speed){
-    teleport(index, nx-size/2, ny-size/2)
-    let angle = Math.atan(-uy/ux);
-    if(ux < 0){
-        if (-uy < 0){
-            angle = angle - Math.PI;
+    const incoming_tile = detectTile(nx,ny)
+    if (mag>obj.speed && !collision_tiles.includes(incoming_tile)){
+        sc_list[index].x = nx;
+        sc_list[index].y = ny;
+        teleport(index, nx-size/2, ny-size/2)
+        let angle = Math.atan(-uy/ux);
+        if(ux < 0){
+            if (-uy < 0){
+                angle = angle - Math.PI;
+            }
+            else{
+                angle = angle+ Math.PI;
+            }
         }
-        else{
-            angle = angle+ Math.PI;
-        }
-    }
-    angle = angle*(180/Math.PI)
-    let direction = "left";
-    if (angle >= 22.5 && angle <= 67.5) direction = "upright"
-    else if (angle >= 67.5 && angle <= 112.5) direction = "up"
-    else if (angle >= 112.5 && angle <= 157.5) direction = "upleft"
-    else if (angle <= 22.5 && angle >= -22.5) direction = "right"
-    else if (angle <= -22.5 && angle >= -67.5) direction = "downright"
-    else if (angle <= -67.5 && angle >= -112.5) direction = "down"
-    else if (angle <= -112.5 && angle >= -157.5) direction = "downleft"
-    else if (angle >= 157.5 && angle <= -157.5) direction = "left"
+        angle = angle*(180/Math.PI)
+        let direction = "left";
+        if (angle >= 22.5 && angle <= 67.5) direction = "upright"
+        else if (angle >= 67.5 && angle <= 112.5) direction = "up"
+        else if (angle >= 112.5 && angle <= 157.5) direction = "upleft"
+        else if (angle <= 22.5 && angle >= -22.5) direction = "right"
+        else if (angle <= -22.5 && angle >= -67.5) direction = "downright"
+        else if (angle <= -67.5 && angle >= -112.5) direction = "down"
+        else if (angle <= -112.5 && angle >= -157.5) direction = "downleft"
+        else if (angle >= 157.5 && angle <= -157.5) direction = "left"
 
-    drawSC(0, "increment", direction);
+        drawSC(0, "increment", direction);
     }
 }
 

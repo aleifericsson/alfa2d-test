@@ -15,7 +15,7 @@ const miniWrapper = () =>{
     addClass(rapper, ["mini-wrapper"]);
     style(rapper,`
         position:relative;
-        background-color: #FFFFFF;
+        background-color: #000000;
         top: 650px;
         width: 640px;
         display:flex;

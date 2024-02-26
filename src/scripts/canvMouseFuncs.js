@@ -32,8 +32,4 @@ const backgroundChange = (ctx, mouse) => {
     modifyTile(tilex,tiley,tile);
 }
 
-const dragSprite = () => {
-
-}
-
 export {initMouse, getMousePos, backgroundChange};

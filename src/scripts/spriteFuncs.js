@@ -1,5 +1,6 @@
 import coinsrc from "../images/coin.png";
-import carsrc from "../images/Car_updated.png"
+
+//MOSTLY DEFUNCT NOW, DELETE IN REAL PROJECTS
 
 function Sprite(name,imgsrc, frames, twos, size, x, y){
     this.name = name;

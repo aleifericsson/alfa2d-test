@@ -1,7 +1,7 @@
 import {render, remove, create, addClass, remClass, find, write, detect, undetect, style, hasClass} from "../scripts/QoL"
 import buttons from "../images/Buttons_updated.png"
 import { togglePrompt } from "./prompts";
-import { drawSC, moveTowards, setShow, teleport } from "../scripts/spritecanvas";
+import { drawSC, moveTowards, setShow, teleport } from "./spritecanvas";
 import background from "../images/solid_backgrounds.png";
 
 const butSize = 32;
@@ -111,4 +111,4 @@ const togglePointer = (evt) => {
     }
 }
 
-export {buttonOverlay}
+export {buttonOverlay ,togglePointer}
