@@ -25,7 +25,7 @@ const canvas = (width, height, layer) => {
     {
         initBackground(ctx, width, height);
     }
-    if (layer ===1){
+    if (layer ===2){
         initSprites2(ctx);
     }
 
@@ -55,7 +55,7 @@ function runEverything(canvasList, width, height){
                 updateBackground(ctx, width, height);
                 //implement someway so that it wont update unless there is a change
             }
-            if (index===1){   
+            if (index===2){   
                 updateSprites(ctx);
             }
         });

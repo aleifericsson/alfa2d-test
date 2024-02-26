@@ -2,11 +2,13 @@ import {render, remove, create, addClass, remClass, find, write, detect, undetec
 import buttons from "../images/Buttons_updated.png"
 import { togglePrompt } from "./prompts";
 import { drawSC, moveTowards, setShow, teleport } from "../scripts/spritecanvas";
+import background from "../images/solid_backgrounds.png";
 
 const butSize = 32;
 let butOv;
 let pointer = false;
 let pointTime = [];
+let bg = -1;
 
 const buttonOverlay = (width, height) =>{
     butOv = create("div");
@@ -24,8 +26,9 @@ const buttonOverlay = (width, height) =>{
 
 const generateButtons = (butOv) => {
     render(butOv, Button("promptbut1", 2, togglePrompt, 16, 16))
-    render(butOv, Button("shaker", 3, toggleShake, 16, 64))
-    render(butOv, Button("pointer", 7, togglePointer, 16, 112))
+    render(butOv, Button("shaker", 3, toggleShake, 16, 80))
+    render(butOv, Button("pointer", 7, togglePointer, 16, 144))
+    render(butOv, Button("changebg", 8, changeBackground, 16, 208))
 }
 
 const Button = (name, spritenum, func, x, y) =>{
@@ -52,6 +55,22 @@ const toggleShake = (e) => {
         remClass(promptbut, ["vibrate"]);
     }
     setTimeout(() => addClass(promptbut, ["vibrate"]), 100);
+}
+
+const changeBackground = (e) => {
+    bg += 1;
+    if (bg === 2) bg = -1;
+    const canv = find(".layer-1");
+    const ctx = canv.getContext("2d");
+    const size = 320;
+    if (bg !== -1){
+        const img = new Image();
+        img.src = background;
+        img.onload = function() {
+            ctx.drawImage(img, 320*bg, 0, size, size, 0, 0, 640,640);
+        }
+    }
+    else ctx.clearRect(0,0,640,640);
 }
 
 const togglePointer = (evt) => {

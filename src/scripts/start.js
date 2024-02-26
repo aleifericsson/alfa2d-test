@@ -13,12 +13,14 @@ const height = 640;
 const initCanvases = () => {
     const rapper = wrapper();
     const backgroundCanvas = canvas(width,height,0);
-    const spriteCanvas = canvas(width,height,1);
+    const solidBGs = canvas(width,height,1);
+    const spriteCanvas = canvas(width,height,2);
     render(rapper, backgroundCanvas);
+    render(rapper, solidBGs);
     render(rapper, spriteCanvas);
     initSC(rapper);
     console.log("commencing");
-    runEverything([backgroundCanvas,spriteCanvas], width, height);
+    runEverything([backgroundCanvas, solidBGs, spriteCanvas], width, height);
 
 
     const butOv = buttonOverlay(width, height)
