@@ -5,6 +5,7 @@ const wrapper = () =>{
     addClass(rapper, ["wrapper"]);
     style(rapper,`
         position:relative;
+        left: -320px;
     `)
     render(document.body, rapper);
     return rapper;

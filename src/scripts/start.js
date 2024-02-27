@@ -1,4 +1,6 @@
 import '../css/animations.css';
+import '../css/fonts.css';
+import pattern from "../images/pattern_102.gif"
 import {render, create, addClass, remClass, find, write, style, detect} from "../scripts/QoL"
 import { canvas, runEverything } from '../components/canvas';
 import { wrapper, miniWrapper } from '../components/wrapper';
@@ -13,6 +15,9 @@ const height = 640;
 const initCanvases = () => {
     style(document.body, `
         background-color: #242424;
+        background-image: url("${pattern}");
+        background-size: 70px;
+        background-repeat: repeat;
     `)
     const rapper = wrapper();
     const backgroundCanvas = canvas(width,height,0);
@@ -24,15 +29,19 @@ const initCanvases = () => {
     runEverything([backgroundCanvas, solidBGs], width, height);
     const butOv = buttonOverlay(width, height)
     render(rapper, butOv);
+    return rapper;
 }
 
 const initMiniCanvases = () => {
     const minirapper = miniWrapper();
     initMinis(minirapper);
+    return minirapper;
 }
 
 const initDebug = () =>{
-    render(document.body, debugTools());
+    const debugTool = debugTools();
+    render(document.body, debugTool);
+    return debugTool;
 }
 
 export {initCanvases, initMiniCanvases, initDebug}

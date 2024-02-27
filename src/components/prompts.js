@@ -26,7 +26,6 @@ const createPrompt = (mytext) => {
             color:white;
             background-color: slategray;
             border: 5px solid darkslategray;
-            border-radius: 5px;
             position:absolute;
             transition: 0.1s;
             width: 200px;
@@ -43,6 +42,21 @@ const createPrompt = (mytext) => {
 
         setTimeout(()=> prompt.classList.remove("start-state"), 100);
 }
+
+const createText = (mytext) =>{
+    const text = create("div");
+        style(text, `
+            color:white;
+            position:relative;
+            text-align:center;
+            margin:15px 5px;
+            font-family: 'munro';
+        `);
+    write(text, mytext);
+
+    return text;
+}
+
 
 const dragBar = () => {
     const bar = create("div");
@@ -100,18 +114,4 @@ const mouseUp = (e) =>{
     undetect(document.body,"mousemove", mouseMove);
     remClass(find("#prompt1"), ["notransition"]);
 }
-
-const createText = (mytext) =>{
-    const text = create("div");
-        style(text, `
-            color:white;
-            position:relative;
-            text-align:center;
-            margin:15px 5px;
-        `);
-    write(text, mytext);
-
-    return text;
-}
-
 export {togglePrompt};
