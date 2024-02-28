@@ -3,6 +3,7 @@ import Can from "../images/can.png"
 import Coin from "../images/coin.png"
 import decor from "../images/decor.png"
 import { backgroundChange } from "../scripts/canvMouseFuncs";
+import { spriteCanvas } from "./spritecanvas";
 
 let miniList = [];
 
@@ -119,6 +120,11 @@ function miniCanvas(name, img, imgsrc){
         const mouseUpFunc = (evt) => {
             undetect(document.body, "mousemove", updateDrag)
             undetect(backcanv, "mouseenter", hoverFunc)
+            if (interval_list.length!==0){
+                if(name === "coin"){
+                    const coin = spriteCanvas(find(".wrapper"), "coin", 64, Coin, mousePos2.x-32, mousePos2.y-32, 0, true, 12)
+                }
+            }
             clearInterval(interval_list[0]);
             interval_list = [];
             const hasChild = find(`.mini-canvas.${this.name}`) != null;

@@ -1,4 +1,5 @@
 import {render, create, addClass, remClass, find, write, detect, style, attribs} from "../scripts/QoL"
+import { animateSCs } from "../scripts/SCanimations";
 import { initMouse } from "../scripts/canvMouseFuncs";
 import {initBackground, updateBackground, clear} from "../scripts/canvasFuncs";
 
@@ -52,6 +53,7 @@ function runEverything(canvasList, width, height){
             }
         });
 
+        animateSCs();
     
     }
 

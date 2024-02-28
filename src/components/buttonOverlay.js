@@ -1,7 +1,7 @@
 import {render, remove, create, addClass, remClass, find, write, detect, undetect, style, hasClass} from "../scripts/QoL"
 import buttons from "../images/Buttons_updated.png"
 import { togglePrompt } from "./prompts";
-import { drawSC, moveTowards, setShow, teleport } from "./spritecanvas";
+import { coin_list, destroySC, drawSC, moveTowards, setShow, teleport } from "./spritecanvas";
 import background from "../images/solid_backgrounds.png";
 
 const butSize = 32;
@@ -55,6 +55,11 @@ const toggleShake = (e) => {
         remClass(promptbut, ["vibrate"]);
     }
     setTimeout(() => addClass(promptbut, ["vibrate"]), 100);
+
+    let i;
+    for (i = coin_list.length - 1; i >= 0; i -= 1) {
+        destroySC(coin_list[i]);
+    }
 }
 
 const changeBackground = (e) => {

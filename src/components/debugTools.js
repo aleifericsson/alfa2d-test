@@ -1,5 +1,17 @@
 import {render, create, addClass, remClass, find, write, detect,style,attribs} from "../scripts/QoL"
 
+let score = -1;
+
+const incrementScore = (scoreele = "bruh") => {
+    score+= 1;
+    if (scoreele === "bruh"){
+        write(find("#score"), `Score: ${score}`)
+    }
+    else{
+        write(scoreele, `Score: ${score}`)
+    }
+
+}
 
 const debugTools = () =>{
     const debugWrap = create("div");
@@ -22,6 +34,15 @@ const debugTools = () =>{
     attribs(slider2,["type", "min", "max", "value", "class"], ["range", "0", "640","0","slidey"])
     render(debugWrap, slider2);
 
+    const scoreele = create("h1")
+    scoreele.id = "score";
+    style(scoreele, `
+        color:white;
+        font-family: munro;
+    `)
+    incrementScore(scoreele);
+    render(debugWrap, scoreele);
+
     return debugWrap;
 }
 
@@ -36,4 +57,4 @@ const slideFunc = (e) => {
     }
 }
 
-export{debugTools};
+export{debugTools, incrementScore, score};

@@ -3,8 +3,10 @@ import carsrc from "../images/Car_updated.png"
 import { detectTile, getTiles } from "../scripts/canvasFuncs"
 import hlsrc from "../images/decor.png"
 import { collision_tiles } from "../scripts/canvasFuncs"
+import coinsrc from "../images/coin.png"
 
-let sc_list = []
+let sc_list = [];
+let coin_list = [];
 
 const spriteCanvas = (wrapper, name, size, imgsrc, x, y, speed, show, frames) =>{
 
@@ -46,6 +48,9 @@ const spriteCanvas = (wrapper, name, size, imgsrc, x, y, speed, show, frames) =>
 
     sc_list.push(obj);
 
+    if (name === "coin"){
+        coin_list.push(obj);
+    }
 
     if (show){
         const ctx = canv.getContext("2d");
@@ -148,9 +153,24 @@ const teleport = (index, x, y) =>{
     `);
 }
 
+const destroySC = (obj) => {
+    const index = sc_list.indexOf(obj);
+    if (index > -1) { // only splice array when item is found
+        if (sc_list[index].name === "coin"){
+            const index2 = coin_list.indexOf(obj);
+            if(index2 > -1){
+                coin_list.splice(index2, 1);
+            }
+        }
+        remove(find(".wrapper"), sc_list[index].ele);
+        sc_list.splice(index, 1); // 2nd parameter means remove one item only
+    }
+}
+
 const initSC = (wrapper) =>{
     const car = spriteCanvas(wrapper, "car", 64, carsrc, 300, 200, 5, true,3);
     const highlight = spriteCanvas(wrapper, "highlight", 64, hlsrc, 0,0, 0, false,8)
+    const coin = spriteCanvas(wrapper, "coin", 64, coinsrc, 400, 500, 0, true, 12)
 }
 
-export{initSC, moveTowards ,setShow, drawSC, teleport}
+export{initSC, moveTowards ,setShow, drawSC, teleport, coin_list, destroySC, spriteCanvas}
