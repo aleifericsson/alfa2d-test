@@ -2,25 +2,58 @@ import {render, remove, create, addClass, remClass, hasClass, attribs, find, wri
 import close from "../images/close.png"
 
 let butOv;
+let currentMovingCode = 0;
+/*
+    Prompt code:
+    1: test_prompt
+    2: win screen
+    3: tutorial
+
+*/
 
 const togglePrompt = (e) => {
-    if (e.target.id === "promptbut1" || e.target.id === "closeprompt1"){
-        const exists = find(".prompt");
-        if (exists != null) { 
-            addClass(exists, ["end-state"]);
-            setTimeout(()=> remove(document.body, exists), 200);
-        } 
-        else{
-            createPrompt("you have been prompted");
+    let code = 0;
+    let prompt = "";
+    if (typeof e === 'string' || e instanceof String){
+        if (e === "win"){
+            code = 2;
+            prompt = "you won!";
         }
+        if (e === "tutorial"){
+            code = 3;
+            prompt = "welcome! how to play: find out!";
+        }
+    }
+    else{
+        if (e.target.id === "promptbut-1" || e.target.id === "closeprompt-1"){
+            code = 1;
+            prompt = "you have been prompted";
+        }
+        else if (e.target.id === "closeprompt-2"){
+            code = 2;
+        }
+        else if (e.target.id === "closeprompt-3"){
+            code = 3;
+        }
+    }   
+    
+
+    const exists = find(`#prompt-${code}`);
+    if (exists != null) { 
+        addClass(exists, ["end-state"]);
+        setTimeout(()=> remove(find(".wrapper"), exists), 200);
+    } 
+    else{
+        createPrompt(prompt,code);
     }
 }
 
-const createPrompt = (mytext) => {
+const createPrompt = (mytext, code) => {
     const butOv = find(".button-overlay");
     const prompt = create("div");
         addClass(prompt, ["prompt", "start-state"]);
-        attribs(prompt, ["id", "draggable"], ["prompt1", "false"])
+        attribs(prompt, ["id", "draggable"], [`prompt-${code}`, "false"])
+
         //make prompt index system pls
         style(prompt, `
             color:white;
@@ -34,11 +67,11 @@ const createPrompt = (mytext) => {
             top: 250px;
         `);
         
-        const drag = dragBar();
+        const drag = dragBar(code);
         render(prompt, drag);
 
         render(prompt, createText(mytext));
-        render(document.body, prompt);
+        render(find(".wrapper"), prompt);
 
         setTimeout(()=> prompt.classList.remove("start-state"), 100);
 }
@@ -58,10 +91,10 @@ const createText = (mytext) =>{
 }
 
 
-const dragBar = () => {
+const dragBar = (code) => {
     const bar = create("div");
     addClass(bar, ["bar"]);
-    attribs(bar, ["id", "draggable"], ["bar1", "false"])
+    attribs(bar, ["id", "draggable"], [`bar-${code}`, "false"])
     style(bar, `
         display:flex;
         justify-content: flex-end;
@@ -73,7 +106,7 @@ const dragBar = () => {
 
     const closePrompt = create("div");
     addClass(closePrompt, ["button", "closeprompt"]);
-    closePrompt.id = "closeprompt1";
+    closePrompt.id =   `closeprompt-${code}`;
     style(closePrompt, `
         position: absolute;
         width: 16px;
@@ -92,26 +125,32 @@ const dragBar = () => {
 }
 
 const mouseDown = (e) =>{
+    const code = e.target.id.split('-')[1];
+    currentMovingCode = code;
     e.preventDefault();
     detect(document.body, "mousemove", mouseMove);
-    addClass(find("#prompt1"), ["notransition"]);
+    addClass(find(`#prompt-${code}`), ["notransition"]);
 }
 
 const mouseMove = (evt) => {
     evt.preventDefault();
-    const prompt = find("#prompt1");
-    const rect = document.body.getBoundingClientRect();
+    const prompt = find(`#prompt-${currentMovingCode}`);
+    const rect = find(".wrapper").getBoundingClientRect();
     const mousePos = {
         x: evt.clientX - rect.left,
         y: evt.clientY - rect.top
     };
-                    
-    prompt.style.top = mousePos.y -10 +"px";
-    prompt.style.left = mousePos.x -100 + "px";
+    
+    if (prompt !== null)
+    {
+        prompt.style.top = mousePos.y -10 +"px";
+        prompt.style.left = mousePos.x -100 + "px";
+    }
 }
 
 const mouseUp = (e) =>{
     undetect(document.body,"mousemove", mouseMove);
-    remClass(find("#prompt1"), ["notransition"]);
+    remClass(find(`#prompt-${currentMovingCode}`), ["notransition"]);
+    currentMovingCode = 0;
 }
 export {togglePrompt};

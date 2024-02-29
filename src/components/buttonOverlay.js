@@ -25,7 +25,7 @@ const buttonOverlay = (width, height) =>{
 }
 
 const generateButtons = (butOv) => {
-    render(butOv, Button("promptbut1", 2, togglePrompt, 16, 16))
+    render(butOv, Button("promptbut-1", 2, togglePrompt, 16, 16))
     render(butOv, Button("shaker", 3, toggleShake, 16, 80))
     render(butOv, Button("pointer", 7, togglePointer, 16, 144))
     render(butOv, Button("changebg", 8, changeBackground, 16, 208))
@@ -50,7 +50,7 @@ const Button = (name, spritenum, func, x, y) =>{
 }
 
 const toggleShake = (e) => {
-    const promptbut = find("#promptbut1");
+    const promptbut = find("#promptbut-1");
     if (hasClass(promptbut, "vibrate")){
         remClass(promptbut, ["vibrate"]);
     }

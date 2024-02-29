@@ -1,3 +1,4 @@
+import { togglePrompt } from "./components/prompts";
 import { addClass, create, render, style } from "./scripts/QoL";
 import {initCanvases, initDebug, initMiniCanvases, initButtonOverlay} from "./scripts/start";
 
@@ -15,3 +16,5 @@ style(game, `
 render(game, initCanvases());
 render(game, initMiniCanvases());
 render(game, initDebug());
+
+togglePrompt("tutorial");

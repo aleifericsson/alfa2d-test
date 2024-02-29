@@ -1,4 +1,5 @@
 import { incrementScore, score } from "../components/debugTools";
+import { togglePrompt } from "../components/prompts";
 import { coin_list, destroySC } from "../components/spritecanvas"
 import { find } from "./QoL";
 
@@ -55,7 +56,7 @@ const checkCollision = (sc, thing) => {
         destroySC(sc);
         incrementScore();
         if (score === 10){
-            
+            togglePrompt("win");
         }
     }
 }
