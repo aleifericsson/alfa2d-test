@@ -67,12 +67,12 @@ const changeBackground = (e) => {
     if (bg === 2) bg = -1;
     const canv = find(".layer-1");
     const ctx = canv.getContext("2d");
-    const size = 320;
+    const size = 160;
     if (bg !== -1){
         const img = new Image();
         img.src = background;
         img.onload = function() {
-            ctx.drawImage(img, 320*bg, 0, size, size, 0, 0, 640,640);
+            ctx.drawImage(img, 160*bg, 0, size, size, 0, 0, 640,640);
         }
     }
     else ctx.clearRect(0,0,640,640);

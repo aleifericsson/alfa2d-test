@@ -6,6 +6,10 @@
     transform: scale(0);
 }
 
+.dialogue-start-end{
+    transform: translate(0, 1000px);
+}
+
 .vibrate {
     animation: tilt-shaking 0.25s 5;
 }  

@@ -1,6 +1,5 @@
-import { togglePrompt } from "./components/prompts";
 import { addClass, create, render, style } from "./scripts/QoL";
-import {initCanvases, initDebug, initMiniCanvases, initButtonOverlay} from "./scripts/start";
+import {initCanvases, initDebug, initOther, initButtonOverlay} from "./scripts/start";
 
 const game = create("div");
 addClass(game, ["game"]);
@@ -11,10 +10,9 @@ style(game, `
     justify-content:center;
     align-items:center;
     position:relative;
+    width:100%;
 `)
 
 render(game, initCanvases());
-render(game, initMiniCanvases());
+render(game, initOther());
 render(game, initDebug());
-
-togglePrompt("tutorial");
