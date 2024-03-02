@@ -4,6 +4,7 @@ import Coin from "../images/coin.png"
 import decor from "../images/decor.png"
 import { backgroundChange } from "../scripts/canvMouseFuncs";
 import { spriteCanvas } from "./spritecanvas";
+import { displayInfo } from "./infoScreen";
 
 let miniList = [];
 
@@ -43,6 +44,7 @@ function miniCanvas(name, img, imgsrc){
 
         const imgele = create("div");
         addClass(imgele, ["canvas-icon"])
+        imgele.id = name;
         style(imgele, `
             width: 64px;
             height: 64px;
@@ -134,9 +136,13 @@ function miniCanvas(name, img, imgsrc){
             ctx.clearRect(0,0,size,size);
         }
 
+        const updateInfo = (evt) =>{
+            displayInfo(evt.target.id);
+        }
 
         detect(imgele, "mousedown", mouseDownFunc);
         detect(document.body, "mouseup", mouseUpFunc);
+        detect(imgele, "mouseenter", updateInfo)
     }       
 }
 
