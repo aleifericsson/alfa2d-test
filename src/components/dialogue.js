@@ -1,11 +1,13 @@
 import {render, remove, create, addClass, remClass, hasClass, attribs, find, write, detect, undetect, style} from "../scripts/QoL"
-import close from "../images/close.png"
 import shadow from "../images/shad.png"
 
 let currentDialogue = 0;
 let dialogues = [];
 
-const nextDialogue = () => {
+const nextDialogue = (code) => {
+    if (Number.isInteger(code)){
+        currentDialogue = code;
+    }
     console.log(currentDialogue)
     const dialogue = createDialogue(dialogues[currentDialogue]);
     currentDialogue += 1;

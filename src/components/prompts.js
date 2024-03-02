@@ -2,7 +2,7 @@ import {render, remove, create, addClass, remClass, hasClass, attribs, find, wri
 import close from "../images/close.png"
 
 let butOv;
-let currentMovingCode = 0;
+let currentCode = 0;
 /*
     Prompt code:
     1: test_prompt
@@ -126,7 +126,7 @@ const dragBar = (code) => {
 
 const mouseDown = (e) =>{
     const code = e.target.id.split('-')[1];
-    currentMovingCode = code;
+    currentCode = code;
     e.preventDefault();
     detect(document.body, "mousemove", mouseMove);
     addClass(find(`#prompt-${code}`), ["notransition"]);
@@ -134,7 +134,7 @@ const mouseDown = (e) =>{
 
 const mouseMove = (evt) => {
     evt.preventDefault();
-    const prompt = find(`#prompt-${currentMovingCode}`);
+    const prompt = find(`#prompt-${currentCode}`);
     const rect = find(".wrapper").getBoundingClientRect();
     const mousePos = {
         x: evt.clientX - rect.left,
@@ -150,7 +150,11 @@ const mouseMove = (evt) => {
 
 const mouseUp = (e) =>{
     undetect(document.body,"mousemove", mouseMove);
-    remClass(find(`#prompt-${currentMovingCode}`), ["notransition"]);
-    currentMovingCode = 0;
+    remClass(find(`#prompt-${currentCode}`), ["notransition"]);
+    currentCode = 0;
+}
+
+const promptObj = () => {
+
 }
 export {togglePrompt};

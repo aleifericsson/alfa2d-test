@@ -2,6 +2,7 @@ import { incrementScore, score } from "../components/debugTools";
 import { togglePrompt } from "../components/prompts";
 import { coin_list, destroySC } from "../components/spritecanvas"
 import { find } from "./QoL";
+import { trigger } from "./triggers";
 
 const animateSCs = () => {
     coin_list.forEach(coin => {
@@ -56,7 +57,7 @@ const checkCollision = (sc, thing) => {
         destroySC(sc);
         incrementScore();
         if (score === 10){
-            togglePrompt("win");
+            trigger("win");
         }
     }
 }
