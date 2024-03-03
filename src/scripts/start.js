@@ -10,6 +10,7 @@ import { buttonOverlay } from '../components/buttonOverlay';
 import { initSC } from '../components/spritecanvas';
 import { initDialogues, nextDialogue } from '../components/dialogue';
 import { initInfoScreen } from '../components/infoScreen';
+import { initAudios } from './sounds';
 
 const width = 640;
 const height = 640;
@@ -39,6 +40,7 @@ const initOther = () => {
     initMinis(minirapper);
     initDialogues();
     initInfoScreen();
+    initAudios();
     return minirapper;
 }
 

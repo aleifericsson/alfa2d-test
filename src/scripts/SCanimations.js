@@ -2,6 +2,7 @@ import { incrementScore, score } from "../components/debugTools";
 import { togglePrompt } from "../components/prompts";
 import { coin_list, destroySC } from "../components/spritecanvas"
 import { find } from "./QoL";
+import { playAudio } from "./sounds";
 import { trigger } from "./triggers";
 
 const animateSCs = () => {
@@ -56,6 +57,7 @@ const checkCollision = (sc, thing) => {
     if (overlap){
         destroySC(sc);
         incrementScore();
+        playAudio("coin");
         if (score === 10){
             trigger("win");
         }

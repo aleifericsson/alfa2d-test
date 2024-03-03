@@ -23,7 +23,7 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif|mp3|wav|ogg)$/i,
         type: 'asset/resource',
       },
       {
@@ -32,4 +32,8 @@ module.exports = {
       },
     ],
   },
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  }
 };

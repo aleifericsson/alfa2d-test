@@ -1,5 +1,7 @@
 import {render, remove, create, addClass, remClass, hasClass, attribs, find, write, detect, undetect, style} from "../scripts/QoL"
 import close from "../images/close.png"
+import closesound from "../sounds/close.mp3"
+import { playAudio } from "../scripts/sounds";
 
 let butOv;
 let currentCode = 0;
@@ -25,6 +27,9 @@ const togglePrompt = (e) => {
         }
     }
     else{
+        if (hasClass(e.target, "closeprompt")){
+            playAudio("close");
+        }
         if (e.target.id === "promptbut-1" || e.target.id === "closeprompt-1"){
             code = 1;
             prompt = "you have been prompted";

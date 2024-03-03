@@ -1,6 +1,7 @@
 import { nextDialogue } from "../components/dialogue";
 import { togglePrompt } from "../components/prompts";
 import { style } from "./QoL";
+import epic from "../sounds/epic_battle_of_fantasies.mp3"
 
 const trigger = (code) => {
     switch (code){

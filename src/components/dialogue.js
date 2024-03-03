@@ -1,10 +1,12 @@
 import {render, remove, create, addClass, remClass, hasClass, attribs, find, write, detect, undetect, style} from "../scripts/QoL"
 import shadow from "../images/shad.png"
+import { playAudio } from "../scripts/sounds";
 
 let currentDialogue = 0;
 let dialogues = [];
 
 const nextDialogue = (code) => {
+    playAudio("swipe");
     if (Number.isInteger(code)){
         currentDialogue = code;
     }
@@ -15,6 +17,7 @@ const nextDialogue = (code) => {
 }
 
 const deleteDialogue = (e) =>{
+    playAudio("swipe");
     let dialogue = e.target;
     if (!hasClass(dialogue, "dialogue")){
         dialogue = e.target.parentNode;
