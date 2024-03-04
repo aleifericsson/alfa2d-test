@@ -26,6 +26,9 @@ const find = (selector) => {
     return document.querySelector(selector);
 }
 
+const findAll = (selector) => {
+    return document.querySelectorAll(selector);
+}
 const write = (element, text) => {
     element.textContent = text;
 }
@@ -48,4 +51,4 @@ const attribs = (element, attribList, values) => {
     })
 }
 
-export {render, remove, create, addClass, hasClass, remClass, find, write, detect, undetect, style, attribs}
+export {render, remove, create, addClass, hasClass, remClass, find, findAll, write, detect, undetect, style, attribs}

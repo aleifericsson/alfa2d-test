@@ -2,7 +2,7 @@ import {render, remove, create, addClass, remClass, find, write, detect, undetec
 import buttons from "../images/Buttons_updated.png"
 import { togglePrompt } from "./prompts";
 import { coin_list, destroySC, drawSC, moveTowards, setShow, teleport } from "./spritecanvas";
-import background from "../images/solid_backgrounds.png";
+import { renderShader, removeShaders, renderLevel } from "./shaders";
 
 const butSize = 32;
 let butOv;
@@ -64,7 +64,11 @@ const toggleShake = (e) => {
 
 const changeBackground = (e) => {
     bg += 1;
-    if (bg === 2) bg = -1;
+    if (bg === 2) {
+        bg = -1;
+        removeShaders();
+    }
+    /*
     const canv = find(".layer-1");
     const ctx = canv.getContext("2d");
     const size = 160;
@@ -76,6 +80,16 @@ const changeBackground = (e) => {
         }
     }
     else ctx.clearRect(0,0,640,640);
+    */
+    if (bg === 0) {
+        renderShader("light-shader");
+        renderLevel("level-1");
+    }
+    else if (bg === 1) {
+        removeShaders();
+        renderLevel("level-2");
+        renderShader("dark-shader");
+    }
 }
 
 const togglePointer = (evt) => {

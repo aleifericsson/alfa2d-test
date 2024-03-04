@@ -8,7 +8,15 @@ import { trigger } from "./triggers";
 const animateSCs = () => {
     coin_list.forEach(coin => {
         drawObj(coin, "increment", "none");
-        checkCollision(coin, find("#car"));
+        const overlap = checkCollision(coin, find("#car"));
+        if (overlap){
+            destroySC(coin);
+            incrementScore();
+            playAudio("coin");
+            if (score === 10){
+                trigger("win");
+            }
+        }
     })
 }
 
@@ -53,15 +61,8 @@ const checkCollision = (sc, thing) => {
                     rect1.left > rect2.right ||  
                     rect1.bottom < rect2.top ||  
                     rect1.top > rect2.bottom); 
-    
-    if (overlap){
-        destroySC(sc);
-        incrementScore();
-        playAudio("coin");
-        if (score === 10){
-            trigger("win");
-        }
-    }
+
+    return overlap;
 }
 
 export {animateSCs}
