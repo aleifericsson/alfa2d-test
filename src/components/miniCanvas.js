@@ -50,6 +50,8 @@ function miniCanvas(name, img, imgsrc){
             height: 64px;
             background: url(${this.imgsrc}) -64px 0, url(${decor});
         `)
+        imgele.dataset.imgsrc = this.imgsrc;
+
         this.imgele = imgele;
 
         this.initMouse(canv, imgele);
@@ -137,7 +139,7 @@ function miniCanvas(name, img, imgsrc){
         }
 
         const updateInfo = (evt) =>{
-            displayInfo(evt.target.id);
+            displayInfo(evt.target.id, evt.target);
         }
 
         detect(imgele, "mousedown", mouseDownFunc);

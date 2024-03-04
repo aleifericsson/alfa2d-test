@@ -30,7 +30,7 @@
 	filter: brightness(100%);
 }
 
-.button:hover, .canvas-icon:hover, .selected{
+.button:hover, .canvas-icon:hover, .dialogue:hover, .bar:hover, .selected{
     -webkit-filter: brightness(80%);
 	-moz-filter: brightness(80%);
 	-o-filter: brightness(80%);

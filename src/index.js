@@ -12,6 +12,7 @@ style(game, `
     align-items:center;
     position:relative;
     width:100%;
+    left: -100px;
 `)
 
 render(game, initCanvases());

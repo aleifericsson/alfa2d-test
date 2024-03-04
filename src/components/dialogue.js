@@ -20,7 +20,10 @@ const deleteDialogue = (e) =>{
     playAudio("swipe");
     let dialogue = e.target;
     if (!hasClass(dialogue, "dialogue")){
-        dialogue = e.target.parentNode;
+        dialogue = dialogue.parentNode;
+        if (!hasClass(dialogue, "dialogue")){
+            dialogue = dialogue.parentNode; //STROKE OF GENIUS MY GUY!!
+        }
     }
     undetect(dialogue, "click", deleteDialogue);
     addClass(dialogue, ["dialogue-start-end"]);
@@ -32,12 +35,13 @@ const deleteDialogue = (e) =>{
     }, 200);
 }
 
-const dialogueObj = (text, code, charactersrc, follow) => {
+const dialogueObj = (text, charname, code, charactersrc, follow) => {
     dialogues.push({
         text,
         code,
         charactersrc,
-        follow
+        follow,
+        charname
     })
 }
 
@@ -53,10 +57,10 @@ const createDialogue = (dialogueObj) => {
             border: 5px solid darkslategray;
             position:absolute;
             transition: 0.1s;
-            width: 400px;
+            width: 600px;
             height: 100px;
             left: calc(50% -200px);
-            top: 400px;
+            top: 500px;
             display:flex;
             justify-content: flex-start;
             align-items: center;
@@ -65,7 +69,7 @@ const createDialogue = (dialogueObj) => {
         `);
 
         render(dialogue, createCharBox(dialogueObj.charactersrc))
-        render(dialogue, createText(dialogueObj.text));
+        render(dialogue, createText(dialogueObj.text,dialogueObj.charname));
         render(find(".game"), dialogue);
 
         setTimeout(()=> dialogue.classList.remove("dialogue-start-end"), 100);
@@ -84,22 +88,37 @@ const createCharBox = (charsrc) => {
     return(charBox);
 }
 
-const createText = (mytext) =>{
+const createText = (mytext,charname) =>{
+    const textbox = create("div");
     const text = create("div");
-        style(text, `
-            color:white;
-            font-family: 'munro';
-            font-size: 25px;
-        `);
-    write(text, mytext);
+    const chartext = create("div");
+    style(textbox,`
+        position:relative;
+        top: -10px;
+    `);
+    style(text, `
+        color:white;
+        font-family: 'munro';
+        font-size: 20px;
+    `);
+    style(chartext, `
+        color:white;
+        font-family: 'munro';
+        font-size: 30px;
+    `);
 
-    return text;
+    write(text, mytext);
+    write(chartext, charname);
+    render(textbox, chartext);
+    render(textbox, text);
+
+    return textbox;
 }
 
 const initDialogues = () => {
-    dialogueObj("man", 0, shadow, true);
-    dialogueObj("life can be tough", 1, shadow, false);
-    dialogueObj("you aint half bad bro", 2, shadow, false);
+    dialogueObj("man", "shadow",0, shadow, true);
+    dialogueObj("life can be tough", "shadow",1, shadow, false);
+    dialogueObj("you aint half bad bro", "shadow", 2, shadow, false);
 }
 
 export {initDialogues, nextDialogue};
