@@ -5,12 +5,13 @@ import decor from "../images/decor.png"
 import { backgroundChange } from "../scripts/canvMouseFuncs";
 import { spriteCanvas } from "./spritecanvas";
 import { displayInfo } from "./infoScreen";
+import icons from "../images/icons.png"
 
 let miniList = [];
 
-function miniCanvas(name, img, imgsrc){
+function miniCanvas(name, img, imgsrc, size){
     this.name = name;
-    this.size = 64;
+    this.size = size;
     this.img = img;
     this.imgsrc = imgsrc;
     this.currentFrame = 0;
@@ -35,8 +36,8 @@ function miniCanvas(name, img, imgsrc){
         const ctx = canv.getContext("2d");
         const img = this.img;
         img.onload = function() {
-            ctx.clearRect(0,0,size,size);
-            ctx.drawImage(img, 0, 0, size, size, 0, 0, size,size);
+            ctx.clearRect(0,0,64,64);
+            ctx.drawImage(img, 0, 0, size, size, 0, 0, 64,64);
         }
 
         this.canvele = canv;
@@ -48,7 +49,7 @@ function miniCanvas(name, img, imgsrc){
         style(imgele, `
             width: 64px;
             height: 64px;
-            background: url(${this.imgsrc}) -64px 0, url(${decor});
+            background: no-repeat url(${this.imgsrc}) 0 0, url(${decor});
         `)
         imgele.dataset.imgsrc = this.imgsrc;
 
@@ -69,7 +70,6 @@ function miniCanvas(name, img, imgsrc){
         let curFra = this.currentFrame;
 
         const hoverFunc = (evt) => {
-            console.log("JSLKJD")
             if (interval_list.length === 0){
                 interval_list.push(setInterval(() => {
                     curFra += 1;
@@ -81,6 +81,11 @@ function miniCanvas(name, img, imgsrc){
                     }
                     if(this.name === "coin"){
                         if(curFra === 12){
+                            curFra = 0;
+                        }
+                    }
+                    if(this.name === "magnet"){
+                        if(curFra === 10){
                             curFra = 0;
                         }
                     }
@@ -149,18 +154,18 @@ function miniCanvas(name, img, imgsrc){
     }       
 }
 
-const initMini = (name, imgsrc) => {
+const initMini = (name, imgsrc, size) => {
     const img = new Image()
     img.src = imgsrc;
-    const mini = new miniCanvas(name, img, imgsrc)
+    const mini = new miniCanvas(name, img, imgsrc, size)
     const miniele = mini.init(miniList.length);
     miniList.push(mini);
     return miniele;
 }
 
 const initMinis = (miniWrapper) => {
-    render(miniWrapper, initMini("can", Can))
-    render(miniWrapper, initMini("coin", Coin))
+    render(miniWrapper, initMini("can", Can, 64))
+    render(miniWrapper, initMini("coin", Coin, 64))
 }
 
 export {initMinis}
